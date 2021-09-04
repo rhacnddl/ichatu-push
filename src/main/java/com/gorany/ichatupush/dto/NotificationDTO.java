@@ -1,6 +1,7 @@
 package com.gorany.ichatupush.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gorany.ichatupush.domain.NotificationType;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class NotificationDTO {
     private Long id;
     private Long targetId;
     private NotificationType type;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
     private Character confirm;
 

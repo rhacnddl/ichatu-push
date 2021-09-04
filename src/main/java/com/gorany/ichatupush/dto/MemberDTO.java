@@ -1,5 +1,6 @@
 package com.gorany.ichatupush.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gorany.ichatupush.domain.Role;
 import lombok.*;
 
@@ -20,7 +21,9 @@ public class MemberDTO {
     private String nickname;
     private String email;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime loginDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
 
     private Boolean available;
