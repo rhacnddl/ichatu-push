@@ -26,10 +26,15 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     @RabbitListener(queues = CHAT_QUEUE_NAME)
     public void sendChatNotification(final List<NotificationDTO> notificationDTOList) {
-        System.out.println("notificationDTOList = " + notificationDTOList.size());
+        //System.out.println("notificationDTOList = " + notificationDTOList.size());
         if(notificationDTOList.isEmpty()) return;
 
-        String senderNickname = notificationDTOList.get(0).getSenderNickname();
+        NotificationDTO notificationDTO = notificationDTOList.get(0);
+        String senderNickname = notificationDTO.getSenderNickname();
+        Long targetId = notificationDTO.getTargetId();
+        String senderProfileId = notificationDTO.getSenderProfileId();
+        String senderProfileName = notificationDTO.getSenderProfileName();
+        String senderProfilePath = notificationDTO.getSenderProfilePath();
         /* Notification -> Tokens 추출 */
         List<String> tokenList = notificationDTOList.stream()
                 .filter(nt -> (nt.getToken() != null && !nt.getToken().equals("")))
@@ -47,17 +52,11 @@ public class NotificationServiceImpl implements NotificationService{
                 .addAllTokens(tokenList)
                 .putData("sender", senderNickname)
                 .putData("type", "chat")
-                .putData("senderProfileId", "")
-                .putData("senderProfileName", "")
-                .putData("senderProfilePath", "")
+                .putData("targetId", String.valueOf(targetId))
+                .putData("senderProfileId", senderProfileId)
+                .putData("senderProfileName", senderProfileName)
+                .putData("senderProfilePath", senderProfilePath)
                 .build();
-//        MulticastMessage message = MulticastMessage.builder()
-//                .addAllTokens(tokenList)
-//                .setWebpushConfig(WebpushConfig.builder()
-//                        .putHeader("TTL", "30")
-//                        .setNotification(webpushNotification)
-//                        .build())
-//                .build();
 
         /* Send Message */
         BatchResponse response = null;

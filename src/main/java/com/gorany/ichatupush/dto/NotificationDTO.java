@@ -27,7 +27,7 @@ public class NotificationDTO {
     private String senderNickname;
 
     //profile
-    private Long senderProfileId;
+    private String senderProfileId;
     private String senderProfileName;
     private String senderProfilePath;
 
