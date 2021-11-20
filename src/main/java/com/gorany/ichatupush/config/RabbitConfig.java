@@ -25,6 +25,14 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 @ConfigurationProperties(prefix = "rabbit")
 public class RabbitConfig {
 
+    @Value("${spring.rabbitmq.host}")
+    private String RABBIT_HOST;
+    @Value("${spring.rabbitmq.port}")
+    private Integer RABBIT_PORT;
+    @Value("${spring.rabbitmq.username}")
+    private String RABBIT_USERNAME;
+    @Value("${spring.rabbitmq.password}")
+    private String RABBIT_PASSWORD;
     @Value("${chat.queue.name}")
     private String CHAT_QUEUE_NAME;
     @Value("${comment.queue.name}")
@@ -85,11 +93,11 @@ public class RabbitConfig {
     public ConnectionFactory connectionFactory(){
         CachingConnectionFactory factory = new CachingConnectionFactory();
 
-        factory.setHost("34.64.188.95");
-        factory.setPort(5672);
-        factory.setUsername("gorany");
-        factory.setPassword("gorany!");
-        factory.setVirtualHost("/");
+        factory.setHost(RABBIT_HOST);
+        factory.setPort(RABBIT_PORT);
+        factory.setUsername(RABBIT_USERNAME);
+        factory.setPassword(RABBIT_PASSWORD);
+        factory.setVirtualHost("myVirtual");
         return factory;
     }
 
